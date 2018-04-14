@@ -1,0 +1,6 @@
+[mysqld]
+
+# Your conf goes here
+
+#general_log=ON
+

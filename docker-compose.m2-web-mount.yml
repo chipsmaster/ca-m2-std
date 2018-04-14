@@ -1,0 +1,9 @@
+# Host directory mounted as magento root
+
+version: '3'
+
+services:
+  web:
+    volumes:
+      - ${M2_MOUNT_DIR}:${M2_ROOT_DIR}:delegated
+

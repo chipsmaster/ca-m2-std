@@ -1,0 +1,13 @@
+# Additional compose file when web containers are accessed directly (no proxy)
+
+version: '3'
+
+services:
+  web:
+    ports:
+      - "${M2_PUB_URL_PORT?:err}:80"
+
+  mail:
+    ports:
+      - "${MAILHOG_PUB_WEB_PORT?:err}:8025"
+

@@ -1,0 +1,12 @@
+# A volume for magento files (no direct host access)
+
+version: '3'
+
+services:
+  web:
+    volumes:
+      - magento:${M2_ROOT_DIR}
+
+volumes:
+  magento:
+

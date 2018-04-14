@@ -1,0 +1,50 @@
+# Base compose file, altered with additional compose files
+
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d:ro
+      - ./mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+    networks:
+      default:
+        aliases:
+          - mysql-db-host
+
+  web:
+    build:
+      context: ./web
+      args:
+        MAGENTO_USER_ID: "${HOST_USER_ID:?err}"
+        MAGENTO_USER_GROUP_ID: "${HOST_USER_GROUP_ID:?err}"
+    environment:
+      - M2_ROOT_DIR
+      - M2_PUB_URL
+      - M2_DB_HOST=mysql-db-host
+      - M2_DB_NAME=magento
+      - M2_DB_USER=magento
+      - M2_DB_PASS=magento
+    volumes:
+      - ./web/sites-enabled:/etc/apache2/sites-enabled:ro
+      - ./web/conf-enabled/additional.conf:/etc/apache2/conf-enabled/zzz-additional.conf:ro
+      - ./web/additional-php.ini:/etc/php/7.0/apache2/conf.d/50-custom.ini:ro
+      - ./web/additional-php.ini:/etc/php/7.0/cli/conf.d/50-custom.ini:ro
+      - web-composer-cache:/home/magento/.composer
+
+  mail:
+    image: mailhog/mailhog
+    networks:
+      default:
+        aliases:
+          - mailhog-host
+    
+
+volumes:
+  mysql:
+  web-composer-cache:
+
