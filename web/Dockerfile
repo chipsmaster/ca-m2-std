@@ -14,23 +14,25 @@ RUN apt update && apt install -y \
         php7.0-intl \
         php7.0-soap \
         php7.0-zip \
+	mysql-client \
         less vim iputils-ping curl wget \
         && curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/composer
 
-# Additional packages
-RUN apt install -y mysql-client
+# Other installations
 ADD https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
 RUN chmod a+x /usr/local/bin/mhsendmail
+
+# Additional packages
+# ...
 
 # Default env
 ENV M2_ROOT_DIR=/var/www/magento
 
-
 # Create a user with uid and gid as provided
 RUN groupadd --gid $MAGENTO_USER_GROUP_ID magento \
 	&& useradd --uid $MAGENTO_USER_ID --gid $MAGENTO_USER_GROUP_ID --create-home magento \
-	&& echo "cd $M2_ROOT_DIR" >> /home/magento/.bashrc
+	&& echo "cd $M2_ROOT_DIR" >> /home/magento/.bashrc \
 	&& mkdir /home/magento/.composer && chown magento.magento /home/magento/.composer
 
 # Apache stuff
