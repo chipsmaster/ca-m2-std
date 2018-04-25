@@ -146,6 +146,7 @@ else
 fi
 
 ask "Magento base url ?" "$conf_m2_pub_url"
+conf_m2_pub_url="$ask_result"
 step_info "Base url: *$conf_m2_pub_url*"
 echo
 
