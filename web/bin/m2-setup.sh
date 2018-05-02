@@ -17,7 +17,13 @@ then
 	fi
 fi
 
-composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
+project=magento/project-community-edition
+if [ "$M2_EE" = y ]
+then
+	project=magento/project-enterprise-edition
+fi
+
+composer create-project --repository-url=https://repo.magento.com/ $project .
 
 chmod u+x bin/magento
 

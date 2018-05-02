@@ -150,7 +150,7 @@ conf_m2_pub_url="$ask_result"
 step_info "Base url: *$conf_m2_pub_url*"
 echo
 
-ask_bool "Need local access to Magento files ?" n
+ask_bool "Need local access to Magento files ?" y
 if [ "$ask_result" = y ]
 then
 	add_compose_file docker-compose.m2-web-mount.yml
@@ -165,7 +165,12 @@ else
 	step_info "will mount Magento root as a docker volume *${conf_compose_project_name}_${m2_mount_volume}*"
 fi
 echo
+
+ask_bool "Magento EE ?" y
+conf_m2_ee="$ask_result"
 echo
+echo
+
 
 step "Generating *$env_path* ..."
 echo
@@ -181,6 +186,7 @@ echo "M2_MOUNT_DIR=$conf_m2_mount_dir" >> "$env_path"
 echo "M2_ROOT_DIR=$conf_m2_root_dir" >> "$env_path"
 echo "M2_PUB_URL_PORT=$conf_m2_pub_url_port" >> "$env_path"
 echo "M2_PUB_URL=$conf_m2_pub_url" >> "$env_path"
+echo "M2_EE=$conf_m2_ee" >> "$env_path"
 
 echo "MAILHOG_PUB_WEB_PORT=$conf_mailhog_pub_web_port" >> "$env_path"
 

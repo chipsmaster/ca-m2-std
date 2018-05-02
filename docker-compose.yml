@@ -25,6 +25,7 @@ services:
     environment:
       - M2_ROOT_DIR
       - M2_PUB_URL
+      - M2_EE
       - M2_DB_HOST=mysql-db-host
       - M2_DB_NAME=magento
       - M2_DB_USER=magento
