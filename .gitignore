@@ -1,3 +1,5 @@
 /.env
 /magento/
 /.idea
+/web/sites-enabled.local
+/docker-compose.override.yml

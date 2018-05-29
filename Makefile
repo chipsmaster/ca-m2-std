@@ -36,7 +36,7 @@ install:
 	docker-compose exec -u magento web m2-install.sh
 
 bash:
-	docker-compose exec -u magento web bash
+	docker-compose exec -u magento -e COLUMNS="$(shell tput cols)" -e LINES="$(shell tput lines)" web bash
 
 cron:
 	docker-compose exec -u magento web m2-cron.sh

@@ -172,6 +172,18 @@ echo
 echo
 
 
+compose_override_file=./docker-compose.override.yml
+step "Processing *$compose_override_file* ..."
+if [ ! -e "$compose_override_file" ]
+then
+	step_info "Creating *$compose_override_file*"
+	echo "version: '3'" > "$compose_override_file"
+fi
+add_compose_file docker-compose.override.yml
+echo
+
+
+
 step "Generating *$env_path* ..."
 echo
 
